@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación Renata Mailen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Quicksand:wght@400;700&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <style>
+        :root {
+            --azul-brillo: #0077be;
+            --azul-claro: #e0f2fe;
+            --plata: #C0C0C0;
+            --rosa: #ff69b4;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--azul-claro);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Efecto de Brillos en el Fondo */
+        .fondo-brillos {
+            background: var(--azul-brillo);
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png'); /* Textura de estrellas/brillo */
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* --- SECCIÓN CARTA (SOBRE) --- */
+        .sobre-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #b9e3f9;
+            z-index: 1000;
+            position: fixed;
+            width: 100%;
+            transition: transform 1.5s ease-in-out;
+        }
+
+        .sobre {
+            width: 320px;
+            height: 220px;
+            background: var(--azul-brillo);
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .sobre::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 110px solid #005a91;
+            transition: 1s;
+        }
+
+        .sobre.abierto {
+            transform: translateY(-150%) rotateX(180deg);
+            opacity: 0;
+        }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .invitacion-web {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .nombre-grande {
+            font-family: 'Cinzel+Decorative', cursive;
+            font-size: 3.5rem;
+            margin: 80px 0;
+            color: white;
+            text-shadow: 0 0 15px rgba(255,255,255,0.8);
+        }
+
+        /* Galería en Lista (6 fotos) */
+        .lista-fotos {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .lista-fotos img {
+            width: 85%;
+            max-width: 450px;
+            border-radius: 15px;
+            border: 4px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .texto-introduccion {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+        }
+
+        /* Cuenta Regresiva */
+        #timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .tiempo-segmento {
+            background: white;
+            color: var(--azul-brillo);
+            padding: 15px;
+            border-radius: 12px;
+            min-width: 70px;
+        }
+
+        .tiempo-segmento span {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .frase-piscina {
+            color: var(--rosa);
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 2rem;
+            margin: 50px 0;
+            text-shadow: 2px 2px 0px white;
+        }
+
+        /* Galería 3 fotos final */
+        .galeria-final {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .galeria-final img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        /* Botón WhatsApp Plata */
+        .btn-confirmar {
+            background: linear-gradient(145deg, #d1d1d1, #ffffff);
+            color: #333;
+            padding: 18px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--plata);
+            display: inline-block;
+            margin: 40px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        .btn-confirmar:hover {
+            transform: scale(1.05);
+            background: var(--plata);
+            color: white;
+        }
+
+        .ubicacion-link {
+            color: #a5f3fc;
+            text-decoration: underline;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="musica" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="sobre-container" id="sobre-wrapper">
+        <div class="sobre" onclick="abrirCarta()">
+            <div style="position: absolute; bottom: 20px; width: 100%; text-align: center; color: white; font-weight: bold;">
+                Toca para abrir la magia ✨
+            </div>
+        </div>
+    </div>
+
+    <div class="fondo-brillos invitacion-web" id="cuerpo-invitacion">
+        
+        <h1 class="nombre-grande">RENATA MAILEN</h1>
+
+        <div class="lista-fotos">
+            <img src="foto1.jpg" alt="Renata 1">
+            <img src="foto2.jpg" alt="Renata 2">
+            <img src="foto3.jpg" alt="Renata 3">
+            <img src="foto4.jpg" alt="Renata 4">
+            <img src="foto5.jpg" alt="Renata 5">
+            <img src="foto6.jpg" alt="Renata 6">
+        </div>
+
+        <div class="texto-introduccion">
+            “Desde que llegó, nuestra Princesa Renata nos llena de amor y magia. Ahora que cumple tres años y ya canta sus canciones favoritas de Frozen, te esperamos para celebrar su cumpleaños en un mundo de fantasía helada que hemos preparado con mucho cariño."
+        </div>
+
+        <div class="detalles-evento">
+            <h2>Sábado 9 de MAYO</h2>
+            <h3>11:30 am</h3>
+            
+            <div id="timer">
+                </div>
+
+            <p><strong>LUGAR:</strong> LA QUINTA PROVIDENCIA</p>
+            <a href="https://maps.app.goo.gl/9R6P1XG6wW6jU6jB8" target="_blank" class="ubicacion-link">📍 Ver ubicación en el Mapa</a>
+        </div>
+
+        <p class="frase-piscina">¡Habrá piscina, así que trae tu traje de baño!</p>
+
+        <div class="galeria-final">
+            <img src="foto7.jpg" alt="Renata 7">
+            <img src="foto8.jpg" alt="Renata 8">
+            <img src="foto9.jpg" alt="Renata 9">
+        </div>
+
+        <br>
+        <a href="https://wa.me/529672727381?text=Hola!%20Confirmo%20asistencia%20al%20cumple%20de%20Renata" class="btn-confirmar">Confirmar Asistencia por WhatsApp</a>
+
+        <div class="frase-final-magia" style="font-size: 1.5rem; margin: 60px 0; padding: 20px;">
+            “Será un día inolvidable y nos encantaría compartirlo contigo. ¡Te esperamos!”
+        </div>
+
+        <div style="padding-bottom: 50px; opacity: 0.7;">❄️ Magia y Diversión ❄️</div>
+    </div>
+
+    <script>
+        function abrirCarta() {
+            document.getElementById('sobre-wrapper').style.transform = 'translateY(-100%)';
+            document.getElementById('cuerpo-invitacion').style.display = 'block';
+            document.getElementById('musica').play();
+            
+            // Iniciar animaciones
+            ScrollReveal().reveal('.nombre-grande', { delay: 500, distance: '100px', origin: 'bottom' });
+            ScrollReveal().reveal('.lista-fotos img', { interval: 200, origin: 'left', distance: '50px' });
+            ScrollReveal().reveal('.frase-final-magia', { delay: 300, scale: 0.5, duration: 2000 });
+        }
+
+        // CUENTA REGRESIVA
+        const fechaMeta = new Date("May 9, 2026 11:30:00").getTime();
+
+        setInterval(function() {
+            const ahora = new Date().getTime();
+            const diferencia = fechaMeta - ahora;
+
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+
+            document.getElementById("timer").innerHTML = `
+                <div class="tiempo-segmento"><span>${dias}</span>Días</div>
+                <div class="tiempo-segmento"><span>${horas}</span>Hrs</div>
+                <div class="tiempo-segmento"><span>${minutos}</span>Min</div>
+            `;
+        }, 1000);
+    </script>
+</body>
+</html>
